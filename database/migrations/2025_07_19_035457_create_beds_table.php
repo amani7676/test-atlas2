@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('beds', function (Blueprint $table) {
              $table->id();
             $table->string('name');
+            $table->integer('code')->nullable();
             $table->foreignId('room_id')->constrained('rooms')->onUpdate('cascade')->onDelete('cascade');
             $table->enum('state_ratio_resident', ['rezerve', 'full', 'empty']);
             $table->enum('state', ['active', 'repair']);

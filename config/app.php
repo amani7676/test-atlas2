@@ -186,6 +186,9 @@ return [
          * Package Service Providers...
          */
 
+
+
+
         /*
          * Application Service Providers...
          */
@@ -194,6 +197,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        // costum pro
+        App\Providers\RepositoryServiceProvider::class,  // Repository ها
+        App\Providers\ServiceServiceProvider::class,     // Service ها
 
     ],
 

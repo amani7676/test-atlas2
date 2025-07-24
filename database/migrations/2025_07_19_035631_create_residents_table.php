@@ -14,9 +14,17 @@ return new class extends Migration
         Schema::create('residents', function (Blueprint $table) {
              $table->id();
             $table->string('full_name');
-            $table->string('phone');
-            $table->bigInteger('age');
-            $table->string('job');
+            $table->string('phone')->nullable();
+            $table->bigInteger('age')->nullable();
+            $table->enum('job', [
+                'daneshjo_dolati',
+                'daneshjo_azad',
+                'daneshjo_other',
+                'karmand_dolat',
+                'karmand_shakhse',
+                'azad',
+                'other'
+            ])->nullable();
             $table->enum('referral_source', [
                 'university_introduction',
                 'university_website',
@@ -27,10 +35,11 @@ return new class extends Migration
                 'street',
                 'divar',
                 'other'
-            ])->comment('نحوه اشنایی');
-            $table->boolean('form');
-            $table->boolean('rent');
-            $table->boolean('trust');
+            ])->comment('نحوه اشنایی')->nullable();
+            $table->boolean('form')->default(false);
+            $table->boolean('document')->default(false);
+            $table->boolean('rent')->default(false);
+            $table->boolean('trust')->default(false);
             $table->timestamps();
         });
     }

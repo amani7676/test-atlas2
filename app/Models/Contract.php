@@ -4,11 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Morilog\Jalali\Jalalian;
 
 class Contract extends Model
 {
     use HasFactory;
-      protected $fillable = [
+    protected $fillable = [
         'resident_id',
         'payment_date',
         'bed_id',
@@ -18,9 +19,9 @@ class Contract extends Model
     ];
 
     protected $casts = [
-        'payment_date' => 'date',
-        'start_date' => 'date',
-        'end_date' => 'date'
+        'payment_date' => 'date:Y-m-d',
+        'start_date' => 'date:Y-m-d',
+        'end_date' => 'date:Y-m-d',
     ];
 
     // Relations
@@ -32,5 +33,26 @@ class Contract extends Model
     public function bed()
     {
         return $this->belongsTo(Bed::class);
+    }
+
+    public function getPaymentDateJalaliAttribute()
+    {
+        return $this->payment_date
+            ? Jalalian::fromDateTime($this->payment_date)->format('Y/m/d')
+            : null;
+    }
+
+    public function getStartDateJalaliAttribute()
+    {
+        return $this->start_date
+            ? Jalalian::fromDateTime($this->start_date)->format('Y/m/d')
+            : null;
+    }
+
+    public function getEndDateJalaliAttribute()
+    {
+        return $this->end_date
+            ? Jalalian::fromDateTime($this->end_date)->format('Y/m/d')
+            : null;
     }
 }

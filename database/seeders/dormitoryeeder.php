@@ -55,7 +55,7 @@ class dormitoryeeder extends Seeder
                 foreach ($rooms as $roomNumber => $bedCount) {
                     $roomId = DB::table('rooms')->insertGetId([
                         'unit_id' => $unitId,
-                        'name' => "اتاق {$roomNumber}",
+                        'name' => $roomNumber,
                         'bed_count' => $bedCount,
                         'desc' => '',
                         'created_at' => now(),
@@ -66,7 +66,7 @@ class dormitoryeeder extends Seeder
                     for ($bedNumber = 1; $bedNumber <= $bedCount; $bedNumber++) {
                         DB::table('beds')->insert([
                             'room_id' => $roomId,
-                            'name' => "تخت {$bedNumber} - اتاق {$roomNumber}",
+                            'name' => $bedNumber,
                             'state' => 'active',
                             'state_ratio_resident' => 'empty', // تخت خالی
                             'desc' => "تخت شماره {$bedNumber} در اتاق {$roomNumber} واحد {$unitName}",

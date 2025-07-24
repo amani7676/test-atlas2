@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->integer('code')->nullable();
             $table->foreignId('unit_id')->constrained('units')->onUpdate('cascade')->onDelete('cascade');
             $table->bigInteger('bed_count');
             $table->text('desc');
@@ -23,7 +24,7 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     */ 
+     */
     public function down(): void
     {
         Schema::dropIfExists('rooms');

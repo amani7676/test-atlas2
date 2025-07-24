@@ -9,7 +9,7 @@ class Resident extends Model
 {
     use HasFactory;
 
-      protected $fillable = [
+    protected $fillable = [
         'full_name',
         'phone',
         'age',
@@ -36,4 +36,9 @@ class Resident extends Model
     {
         return $this->hasMany(Note::class);
     }
+    public function getFormattedPhoneAttribute()
+    {
+        return preg_replace('/^(\d{4})(\d{3})(\d{4})$/', '$1-$2-$3', $this->phone);
+    }
+    
 }

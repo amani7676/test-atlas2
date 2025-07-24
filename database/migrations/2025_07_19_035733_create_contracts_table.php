@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('bed_id')->constrained('beds')->onDelete('cascade');
             $table->enum('state', ['rezerve', 'nightly', 'active', 'leaving', 'exit']);
             $table->date('start_date');
-            $table->date('end_date');
+            $table->date('end_date')->nullable();
             $table->timestamps();
         });
     }
