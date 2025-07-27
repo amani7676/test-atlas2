@@ -10,6 +10,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "alpinejs": "^3.14.9",
         "cute-alert": "^0.0.3"
     }
 }

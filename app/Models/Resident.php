@@ -23,11 +23,12 @@ class Resident extends Model
     protected $casts = [
         'form' => 'boolean',
         'rent' => 'boolean',
-        'trust' => 'boolean'
+        'trust' => 'boolean',
+        'document' => 'boolean',
     ];
 
     // Relations
-    public function contracts()
+    public function contract()
     {
         return $this->hasOne(Contract::class);
     }
@@ -40,5 +41,5 @@ class Resident extends Model
     {
         return preg_replace('/^(\d{4})(\d{3})(\d{4})$/', '$1-$2-$3', $this->phone);
     }
-    
+
 }

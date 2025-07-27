@@ -36,23 +36,10 @@ class Home extends Component
 
     }
 
-
-    // // این متد public getter را اضافه کنید
-    // public function getAllReportServiceInstance(): AllReportService
-    // {
-    //     // از Null Coalescing استفاده می‌کنیم تا مطمئن شویم که سرویس همیشه مقداردهی شده است.
-    //     // این حالت فقط برای رندر اولیه کاربرد دارد، در Livewire mount همیشه اجرا می‌شود.
-    //     return $this->allReportService ??= app(AllReportService::class);
-    // }
-
     // متدی که هنگام دریافت رویداد show-alert فراخوانی می‌شود
 
     public function render()
     {
-        // اطمینان حاصل کنید که سرویس‌ها مقداردهی شده‌اند، در غیر این صورت Resolve کنید
-        // $allReportServiceInstance = $this->allReportService ?? app(AllReportService::class);
-        // $rezerveRepositoryInstance = $this->rezerveRepository ?? app(RezerveRepository::class);
-
         return view('livewire.pages.home.home', [
             'allReportService' => $this->allReportService,
             'rezerves' => $this->rezerveRepository,

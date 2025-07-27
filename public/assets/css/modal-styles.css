@@ -1,0 +1,248 @@
+/* استایل‌های مدیریت مودال‌ها */
+
+/* اطمینان از اینکه مودال‌های مختلف روی هم قرار نگیرند */
+.modal[id*="detailsChangesModal"] {
+    z-index: 1060 !important;
+}
+
+.modal[id*="residentModal"] {
+    z-index: 1050 !important;
+}
+
+/* backdrop های مختلف */
+.modal-backdrop[id*="details"] {
+    z-index: 1055 !important;
+}
+
+.modal-backdrop[id*="resident"] {
+    z-index: 1045 !important;
+}
+
+/* انیمیشن‌های مودال */
+.modal.fade.show {
+    opacity: 1;
+    transform: none;
+}
+
+.modal.fade {
+    opacity: 0;
+    transform: translate(0, -50px);
+    transition: opacity 0.15s linear, transform 0.15s ease-out;
+}
+
+/* اطمینان از اینکه فقط یک مودال در هر زمان نمایش داده شود */
+body.modal-open {
+    overflow: hidden;
+}
+
+/* پیشگیری از تداخل مودال‌ها */
+.modal-open .modal {
+    padding-right: 17px;
+}
+
+/* استایل‌های مخصوص مودال جزئیات */
+#detailsChangesModal .modal-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-bottom: none;
+}
+
+#detailsChangesModal .modal-title {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#detailsChangesModal .collapse-toggle {
+    background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+    border: none;
+    color: white;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#detailsChangesModal .collapse-toggle:hover {
+    background: linear-gradient(135deg, #5f3dc4 0%, #9775fa 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    color: white;
+}
+
+#detailsChangesModal .collapse-toggle.collapsed {
+    background: linear-gradient(135deg, #868e96 0%, #adb5bd 100%);
+}
+
+#detailsChangesModal .collapse-toggle.collapsed:hover {
+    background: linear-gradient(135deg, #6c757d 0%, #868e96 100%);
+    color: white;
+}
+
+#detailsChangesModal .collapse-toggle i {
+    transition: transform 0.3s ease;
+}
+
+#detailsChangesModal .collapse-toggle.collapsed i {
+    transform: rotate(-90deg);
+}
+
+/* جلوگیری از اسکرول در پس‌زمینه */
+.modal-open {
+    padding-right: 17px !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .modal-dialog {
+        margin: 10px;
+        max-width: calc(100% - 20px);
+    }
+
+    .modal-xl {
+        max-width: calc(100% - 20px);
+    }
+
+    #detailsChangesModal .col-md-6 {
+        margin-bottom: 15px;
+    }
+
+    #detailsChangesModal .action-buttons .btn {
+        margin-bottom: 5px;
+    }
+
+    #detailsChangesModal .modern-table {
+        font-size: 0.75rem;
+    }
+}
+
+/* اصلاح مشکل overlay */
+.modal-backdrop.show {
+    opacity: 0.5;
+}
+
+/* اطمینان از اینکه مودال‌ها به درستی مخفی می‌شوند */
+.modal:not(.show) {
+    display: none !important;
+}
+
+/* استایل‌های فرم */
+#detailsChangesModal .form-label {
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 8px;
+}
+
+#detailsChangesModal .form-control:focus,
+#detailsChangesModal .form-select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+#detailsChangesModal .btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    transition: all 0.3s ease;
+}
+
+#detailsChangesModal .btn-primary:hover {
+    background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+#detailsChangesModal .btn-outline-primary {
+    border-color: #667eea;
+    color: #667eea;
+    transition: all 0.3s ease;
+}
+
+#detailsChangesModal .btn-outline-primary:hover {
+    background-color: #667eea;
+    border-color: #667eea;
+    transform: translateY(-1px);
+}
+
+#detailsChangesModal .badge {
+    font-size: 0.875em;
+    padding: 8px 12px;
+}
+
+#detailsChangesModal .btn-close-white {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+#detailsChangesModal .text-danger {
+    color: #dc3545 !important;
+}
+
+#detailsChangesModal .invalid-feedback {
+    font-size: 0.875em;
+}
+
+#detailsChangesModal .form-check-input:checked {
+    background-color: #667eea;
+    border-color: #667eea;
+}
+
+#detailsChangesModal .input-group .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+#detailsChangesModal .position-relative .btn-close {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    padding: 2px;
+}
+
+#detailsChangesModal .list-group-item {
+    border: none;
+    border-bottom: 1px solid #dee2e6;
+    transition: all 0.3s ease;
+}
+
+#detailsChangesModal .list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+#detailsChangesModal .list-group {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/* جلوگیری از تداخل با سایر عناصر صفحه */
+.modal-open .navbar,
+.modal-open .sidebar {
+    padding-right: 17px;
+}
+
+/* انیمیشن برای باز و بسته شدن */
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes modalFadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+}
+
+.modal.show .modal-dialog {
+    animation: modalFadeIn 0.3s ease-out;
+}

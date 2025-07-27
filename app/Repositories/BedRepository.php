@@ -6,6 +6,7 @@ namespace App\Repositories;
 use App\Models\Bed;
 use App\Enums\BedState;
 use App\Enums\BedResidentState;
+use App\Models\Resident;
 use Illuminate\Database\Eloquent\Collection;
 
 class BedRepository
@@ -21,7 +22,8 @@ class BedRepository
     {
         return $this->model->create($data);
     }
-     /**
+
+    /**
      * به‌روزرسانی اطلاعات تخت
      *
      * @param int $bedId
@@ -65,8 +67,47 @@ class BedRepository
     {
         return $this->model->with(['room.unit', 'contracts.resident'])->find($bedId);
     }
+
     public function getBeds()
     {
         return $this->model->with('room')->get();
+    }
+
+
+    public function getBedWithResidentId($residentId)
+    {
+
+        $resident = Resident::with(['contracts.bed.room'])->find($residentId);
+
+        if (!$resident || !$resident->contracts->first()) {
+            return null;
+        }
+
+        $contract = $resident->contracts->first();
+        $bed = $contract->bed;
+        $room = $bed?->room;
+
+        return [
+            'resident_id' => $resident->id,
+            'resident_name' => $resident->full_name,
+            'bed_name' => $bed?->name,
+            'room_name' => $room?->name,
+        ];
+        $resident = Resident::with(['contracts.bed.room'])->find($residentId);
+
+        if (!$resident || !$resident->contracts->first()) {
+            return null;
+        }
+
+        $contract = $resident->contracts->first();
+        $bed = $contract->bed;
+        $room = $bed?->room;
+
+        return [
+            'resident_id' => $resident->id,
+            'resident_name' => $resident->full_name,
+            'bed_name' => $bed?->name,
+            'room_name' => $room?->name,
+        ];
     }
 }

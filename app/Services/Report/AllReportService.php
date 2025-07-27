@@ -29,7 +29,7 @@ class AllReportService
     public function getAllResidentsWithDetails()
     {
         return Resident::with([
-            'contracts' => function ($query) {
+            'contract' => function ($query) {
                 $query->with([
                     'bed' => function ($bedQuery) {
                         $bedQuery->with([
@@ -42,7 +42,7 @@ class AllReportService
             },
             'notes'
         ])->get()->map(function ($resident) {
-            $contract = $resident->contracts; // این یک instance از Contract است، نه Collection
+            $contract = $resident->contract; // این یک instance از Contract است، نه Collection
 
             return [
                 'resident' => [
@@ -116,7 +116,7 @@ class AllReportService
      */
     public function getActiveResidentsWithDetails()
     {
-        return Resident::whereHas('contracts', function ($query) {
+        return Resident::whereHas('contract', function ($query) {
             $query->where('state', 1) // فرض بر این که state=1 یعنی فعال
                 ->where('end_date', '>=', now())
                 ->orWhereNull('end_date');

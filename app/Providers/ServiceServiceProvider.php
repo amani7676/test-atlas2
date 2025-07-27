@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 
+use App\Services\Core\ModalManagerService;
 use App\Services\Core\StatusService;
 use Illuminate\Support\ServiceProvider;
 
@@ -74,6 +75,12 @@ class ServiceServiceProvider extends ServiceProvider
             return new UnitService(
                 $app->make(UnitRepository::class)
             );
+        });
+
+
+        // UnitService
+        $this->app->bind(ModalManagerService::class, function ($app) {
+            return new ModalManagerService();
         });
     }
 
@@ -159,6 +166,8 @@ class ServiceServiceProvider extends ServiceProvider
 
             //Utility Services
             StatusService::class,
+
+            ModalManagerService::class,
         ];
     }
 }
