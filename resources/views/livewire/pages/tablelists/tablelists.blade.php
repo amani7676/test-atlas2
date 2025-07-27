@@ -151,7 +151,7 @@
 
     {{-- کامپوننت مودال جداگانه --}}
     <livewire:modals.resident-modal/>
-    <livewire:modals.details-changes/>
+{{--    <livewire:modals.details-changes/>--}}
 
 
     @script
