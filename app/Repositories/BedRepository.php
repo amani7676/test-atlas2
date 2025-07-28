@@ -68,9 +68,13 @@ class BedRepository
         return $this->model->with(['room.unit', 'contracts.resident'])->find($bedId);
     }
 
-    public function getBeds()
+    public function getBeds(): Collection|array
     {
-        return $this->model->with('room')->get();
+        // دریافت تمام تخت‌ها به همراه روابط
+        return $this->model->with([
+            'room.unit', // اتاق و واحد مربوطه
+            'contracts.resident' // قراردادها و رزیدنت مربوطه
+        ])->get();
     }
 
 

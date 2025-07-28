@@ -287,6 +287,14 @@ class ResidentModal extends Component // نام تغییر کرد
                     'state' => $this->state_modal,
                 ]);
             }
+            // بروزرسانی وضعیت تخت
+            \App\Models\Bed::where('id', $contract->bed_id)
+                ->update([
+                    'state' => 'active',
+                    'state_ratio_resident' => in_array($this->state_modal, ['nightly', 'active', 'leaving'])
+                        ? 'full'
+                        : ($this->state_modal === 'rezerve' ? 'rezerve' : null)
+                ]);
 
             $this->dispatch('show-toast', [
                 'type' => 'success',

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->integer('code')->nullable();
             $table->foreignId('room_id')->constrained('rooms')->onUpdate('cascade')->onDelete('cascade');
-            $table->enum('state_ratio_resident', ['rezerve', 'full', 'empty']);
+            $table->enum('state_ratio_resident', ['rezerve', 'full', 'empty', 'nightly']);
             $table->enum('state', ['active', 'repair']);
             $table->text('desc');
             $table->timestamps();

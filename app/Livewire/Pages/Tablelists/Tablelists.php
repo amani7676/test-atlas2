@@ -7,6 +7,7 @@ use App\Services\Core\StatusService;
 use App\Services\Report\AllReportService;
 use App\Traits\HasDateConversion;
 use Livewire\Attributes\Title;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 #[Title('مدیریت ساکنین - لیست جداول')]
@@ -20,8 +21,10 @@ class Tablelists extends Component
     public array $full_name = [];
     public array $phone = [];
     public array $payment_date = [];
-    protected $listeners = ['residentAdded' => 'refreshResidentData'];
-
+    protected $listeners = [
+        'residentAdded' => 'refreshResidentData',
+        'residentDataUpdated' => 'refreshResidentData'  // اضافه شده
+    ];
 
     public function mount()
     {
@@ -120,6 +123,7 @@ class Tablelists extends Component
     }
 
     // متد جدید که بعد از اضافه شدن resident فراخوانی می‌شود
+    #[On('residentDataUpdated')]  // اضافه شده
     public function refreshResidentData(): void
     {
         // داده‌های residents را مجدداً لود کنید
@@ -219,8 +223,13 @@ class Tablelists extends Component
 
     public function detailsChange($residentId): void
     {
-
+        // ارسال رویداد به کامپوننت مودال برای تغییر جزئیات
         $this->dispatch('openDetailsChangeModal', $residentId);
+    }
+    #[On('update_notes')]
+    public function updateNotes()
+    {
+        $this->loadResidentData();
     }
 
     public function render()

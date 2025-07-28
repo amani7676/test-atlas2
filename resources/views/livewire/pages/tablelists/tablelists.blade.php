@@ -3,6 +3,7 @@
         @php
             $colorClass = $this->getColorClass($data['unit']['id']);
         @endphp
+
         <div class="vahed-card mb-4">
             <div class="card-header vahed-header " id="header_vahed_{{ $data['unit']['id'] }}">
                 <h4 class="mb-0 text-white">{{ $data['unit']['name'] }}</h4>
@@ -151,7 +152,7 @@
 
     {{-- کامپوننت مودال جداگانه --}}
     <livewire:modals.resident-modal/>
-{{--    <livewire:modals.details-changes/>--}}
+    <livewire:modals.details-changes-modal/>
 
 
     @script

@@ -15,11 +15,13 @@ use Illuminate\Support\Carbon;
 class AllReportService
 {
     public function __construct(
-        protected UnitRepository $unitRepo,
-        protected RoomRepository $roomRepo,
-        protected BedRepository $bedRepo,
+        protected UnitRepository     $unitRepo,
+        protected RoomRepository     $roomRepo,
+        protected BedRepository      $bedRepo,
         protected ContractRepository $contractRepo
-    ) {}
+    )
+    {
+    }
 
     /**
      * دریافت تمام ساکنان با جزئیات کامل (قرارداد، تخت، یادداشت‌ها، اتاق، واحد)
@@ -118,7 +120,7 @@ class AllReportService
     {
         return Resident::whereHas('contract', function ($query) {
             $query->where('state', 1) // فرض بر این که state=1 یعنی فعال
-                ->where('end_date', '>=', now())
+            ->where('end_date', '>=', now())
                 ->orWhereNull('end_date');
         })->with([
             'contracts' => function ($query) {
@@ -150,7 +152,9 @@ class AllReportService
                     }
                 ]);
             }
-        ])->get()->map(function ($unit) {
+        ])
+            ->orderByDesc('code') // تغییر اصلی اینجا - مرتب سازی نزولی بر اساس کد
+            ->get()->map(function ($unit) {
             return [
                 'unit' => [
                     'id' => $unit->id,
@@ -198,13 +202,13 @@ class AllReportService
                                             'trust' => $contract->resident->trust,
                                         ] : null,
                                         'notes' => $contract->resident?->notes->map(function ($note) {
-                                            return [
-                                                'id' => $note->id,
-                                                'type' => $note->type,
-                                                'note' => $note->note,
-                                                'created_at' => $note->created_at,
-                                            ];
-                                        }) ?? collect(),
+                                                return [
+                                                    'id' => $note->id,
+                                                    'type' => $note->type,
+                                                    'note' => $note->note,
+                                                    'created_at' => $note->created_at,
+                                                ];
+                                            }) ?? collect(),
                                     ];
                                 }),
                             ];
