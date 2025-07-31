@@ -192,7 +192,7 @@
         }
 
         .reserved-bed {
-            background-color: #9B7EBD; /* سبز */
+            background-color: #DEE791; /* سبز */
             color: #ffffff;
         }
 

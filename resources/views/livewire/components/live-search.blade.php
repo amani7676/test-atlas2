@@ -45,6 +45,7 @@
             >
                 @if($searchResults->count() > 0)
                     @foreach($searchResults as $index => $result)
+
                         <div
                             class="search-result-item {{ $selectedIndex === $index ? 'selected' : '' }}"
                             wire:click="selectResult({{ $result->id }})"
@@ -63,6 +64,9 @@
                             <div style="font-weight: 500; color: #333; margin-bottom: 4px;">
                                 <i class="fas fa-user" style="margin-left: 8px; color: #6c757d;"></i>
                                 {!! $this->highlightSearch($result->full_name) !!}
+                                <a style="margin-right: 5px"  href="{{ route('table_list') }}#{{$result->contract->bed->room->name}}">
+                                    <i class="fa-solid fa-paper-plane text-info"></i>
+                                </a>
                             </div>
 
                             <!-- شماره تلفن -->
@@ -112,9 +116,6 @@
                     <div style="padding: 16px; text-align: center; color: #6c757d;">
                         <i class="fas fa-search" style="margin-left: 8px;"></i>
                         نتیجه‌ای یافت نشد
-                        <div style="font-size: 0.8em; margin-top: 5px;">
-                            لطفاً کلمات کلیدی دیگری امتحان کنید
-                        </div>
                     </div>
                 @endif
             </div>
