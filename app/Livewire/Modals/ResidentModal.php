@@ -62,7 +62,7 @@ class ResidentModal extends Component // نام تغییر کرد
             'full_name_modal' => 'required|string|max:255',
             'payment_date_modal' => ['required', new PersianDate],
             'state_modal' => 'required|in:rezerve,nightly,active,leaving,exit',
-            'phone_modal' => 'digits:11'
+//            'phone_modal' => 'digits:11'
         ];
     }
 
@@ -70,7 +70,7 @@ class ResidentModal extends Component // نام تغییر کرد
         'full_name_modal.required' => 'نام و نام خانوادگی الزامی است',
         'payment_date_modal.required' => 'تاریخ پرداخت الزامی است',
         'state_modal.required' => 'وضعیت رو مشخص کنید',
-        'phone_modal.digits' => 'شماره تلفن باید 11 رقم باشد'
+//        'phone_modal.digits' => 'شماره تلفن باید 11 رقم باشد'
     ];
 
     public function openAddModal($bedName, $roomName)
@@ -264,6 +264,7 @@ class ResidentModal extends Component // نام تغییر کرد
 
     private function updateExistingResident()
     {
+//        dd($this->document_modal, $this->rent_modal, $this->trust_modal);
         $resident = Resident::find($this->editingResidentId);
         if ($resident) {
             // بروزرسانی اطلاعات resident

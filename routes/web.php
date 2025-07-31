@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Pages\Home\Home;
+use App\Livewire\Pages\Reservations\Reservations;
 use App\Livewire\Pages\Tablelists\Tablelists;
 use Illuminate\Support\Facades\Route;
 
@@ -15,4 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get("/", Home::class)->name('home');
-Route::get("lists", Tablelists::class)->name('table_list');
+Route::get("/lists", Tablelists::class)->name('table_list');
+Route::get("/BedStatistic", \App\Livewire\Pages\BedStatistics\BedStatistics::class)->name('Bed_statistic');
+Route::get("/Reservations", Reservations::class)->name('reservations');
+Route::get("/report/list-current-resident", \App\Livewire\Pages\Reports\ListCurrentResident::class)->name('report.list_current_resident');

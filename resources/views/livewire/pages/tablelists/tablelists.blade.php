@@ -4,7 +4,7 @@
             $colorClass = $this->getColorClass($data['unit']['id']);
         @endphp
 
-        <div class="vahed-card mb-4">
+        <div class="vahed-card mb-4 p-1">
             <div class="card-header vahed-header " id="header_vahed_{{ $data['unit']['id'] }}">
                 <h4 class="mb-0 text-white">{{ $data['unit']['name'] }}</h4>
             </div>
@@ -17,9 +17,9 @@
                                      id="otagh-vahed{{ $data['unit']['id'] }}">
                                     <h5 class="mb-0">{{ $roomData['room']['name'] }}</h5>
                                 </div>
-                                <div class="card-body p-2" id="tableforvahed{{ $data['unit']['id'] }}">
+                                <div class="card-body p-0" id="tableforvahed{{ $data['unit']['id'] }}">
                                     <div class="table-responsive">
-                                        <table class="table table-sm table-hover modern-table">
+                                        <table class="table table-sm table-hover modern-table" id="{{ $roomData['room']['name'] }}">
                                             <thead>
                                             <tr>
                                                 <th>تخت</th>
@@ -82,15 +82,11 @@
                                                         <td class="resident-phone">
                                                             <div>
                                                                 <input type="text"
-                                                                       wire:model.live="phone.{{ $resident['id'] }}"
-                                                                       class="form-control form-control-sm phone-input @error('phone.'.$resident['id']) is-invalid @enderror"
+                                                                       wire:model="phone.{{ $resident['id'] }}"
+                                                                       class="form-control form-control-sm phone-input "
                                                                        maxlength="13"
                                                                        value="{{ $phone[$resident['id']] ?? '' }}">
-                                                                @error('phone.'.$resident['id'])
-                                                                <div class="invalid-feedback d-block">
-                                                                    <small>{{ $message }}</small>
-                                                                </div>
-                                                                @enderror
+
                                                             </div>
                                                         </td>
 

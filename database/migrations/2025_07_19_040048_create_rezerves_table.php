@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('phone');
             $table->foreignId('bed_id')->constrained('beds')->onUpdate('cascade')->onDelete('cascade');
             $table->text('note');
-            $table->bigInteger('priority');
+            $table->enum('priority', ['low', 'medium', 'high']);
             $table->timestamps();
         });
     }

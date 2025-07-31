@@ -43,59 +43,66 @@ class AllReportService
                 ]);
             },
             'notes'
-        ])->get()->map(function ($resident) {
-            $contract = $resident->contract; // این یک instance از Contract است، نه Collection
+        ])
+            ->get()
+            ->map(function ($resident) {
+                $contract = $resident->contract; // این یک instance از Contract است، نه Collection
 
-            return [
-                'resident' => [
-                    'id' => $resident->id,
-                    'full_name' => $resident->full_name,
-                    'phone' => $resident->formatted_phone,
-                    'age' => $resident->age,
-                    'job' => $resident->job,
-                    'referral_source' => $resident->referral_source,
-                    'document' => $resident->document,
-                    'form' => $resident->form,
-                    'rent' => $resident->rent,
-                    'trust' => $resident->trust,
-                ],
-                'contract' => $contract ? [
-                    'id' => $contract->id,
-                    'payment_date' => $contract->payment_date_jalali,
-                    'day_since_payment' => $this->getDaysSincePayment($contract->payment_date),
-                    'start_date' => $contract->start_date_jalali,
-                    'end_date' => $contract->end_date_jalali,
-                    'state' => $contract->state,
-                ] : null,
-                'bed' => $contract?->bed ? [
-                    'id' => $contract->bed->id,
-                    'name' => $contract->bed->name,
-                    'state_ratio_resident' => $contract->bed->state_ratio_resident,
-                    'state' => $contract->bed->state,
-                    'desc' => $contract->bed->desc,
-                ] : null,
-                'room' => $contract?->bed?->room ? [
-                    'id' => $contract->bed->room->id,
-                    'name' => $contract->bed->room->name,
-                    'bed_count' => $contract->bed->room->bed_count,
-                    'desc' => $contract->bed->room->desc,
-                ] : null,
-                'unit' => $contract?->bed?->room?->unit ? [
-                    'id' => $contract->bed->room->unit->id,
-                    'name' => $contract->bed->room->unit->name,
-                    'code' => $contract->bed->room->unit->code,
-                    'desc' => $contract->bed->room->unit->desc,
-                ] : null,
-                'notes' => $resident->notes->map(function ($note) {
-                    return [
-                        'id' => $note->id,
-                        'type' => $note->type,
-                        'note' => $note->note,
-                        'created_at' => $note->created_at,
-                    ];
-                }),
-            ];
-        });
+                return [
+                    'resident' => [
+                        'id' => $resident->id,
+                        'full_name' => $resident->full_name,
+                        'phone' => $resident->formatted_phone,
+                        'age' => $resident->age,
+                        'job' => $resident->job,
+                        'referral_source' => $resident->referral_source,
+                        'document' => $resident->document,
+                        'form' => $resident->form,
+                        'rent' => $resident->rent,
+                        'trust' => $resident->trust,
+                    ],
+                    'contract' => $contract ? [
+                        'id' => $contract->id,
+                        'payment_date' => $contract->payment_date_jalali,
+                        'day_since_payment' => $this->getDaysSincePayment($contract->payment_date),
+                        'start_date' => $contract->start_date_jalali,
+                        'end_date' => $contract->end_date_jalali,
+                        'state' => $contract->state,
+                    ] : null,
+                    'bed' => $contract?->bed ? [
+                        'id' => $contract->bed->id,
+                        'name' => $contract->bed->name,
+                        'state_ratio_resident' => $contract->bed->state_ratio_resident,
+                        'state' => $contract->bed->state,
+                        'desc' => $contract->bed->desc,
+                    ] : null,
+                    'room' => $contract?->bed?->room ? [
+                        'id' => $contract->bed->room->id,
+                        'name' => $contract->bed->room->name,
+                        'bed_count' => $contract->bed->room->bed_count,
+                        'desc' => $contract->bed->room->desc,
+                    ] : null,
+                    'unit' => $contract?->bed?->room?->unit ? [
+                        'id' => $contract->bed->room->unit->id,
+                        'name' => $contract->bed->room->unit->name,
+                        'code' => $contract->bed->room->unit->code,
+                        'desc' => $contract->bed->room->unit->desc,
+                    ] : null,
+                    'notes' => $resident->notes->map(function ($note) {
+                        return [
+                            'id' => $note->id,
+                            'type' => $note->type,
+                            'note' => $note->note,
+                            'created_at' => $note->created_at,
+                        ];
+                    }),
+                ];
+            })
+            ->sortByDesc(function ($item) {
+                return $item['contract']['day_since_payment'] ?? PHP_INT_MAX;
+            })
+            ->values()
+            ->all();
     }
 
     /**
@@ -135,87 +142,92 @@ class AllReportService
 
     public function getDaysSincePayment($paymentDate)
     {
-        return Carbon::now()->diffInDays(Carbon::parse($paymentDate), false);
+
+        $today = Carbon::now()->startOfDay();
+        $payment = Carbon::parse($paymentDate)->startOfDay();
+
+        return $today->diffInDays($payment, false);
     }
 
     public function getUnitWithDependence()
     {
         return Unit::with([
             'rooms' => function ($query) {
-                $query->with([
-                    'beds' => function ($bedQuery) {
-                        $bedQuery->with([
-                            'contracts' => function ($contractQuery) {
-                                $contractQuery->with('resident.notes');
-                            }
-                        ]);
-                    }
-                ]);
+                $query->orderBy('name', 'desc')
+                    ->with([
+                        'beds' => function ($bedQuery) {
+                            $bedQuery->with([
+                                'contracts' => function ($contractQuery) {
+                                    $contractQuery->with('resident.notes');
+                                }
+                            ]);
+                        }
+                    ]);
             }
         ])
             ->orderByDesc('code') // تغییر اصلی اینجا - مرتب سازی نزولی بر اساس کد
             ->get()->map(function ($unit) {
-            return [
-                'unit' => [
-                    'id' => $unit->id,
-                    'name' => $unit->name,
-                    'code' => $unit->code,
-                    'desc' => $unit->desc,
-                ],
-                'rooms' => $unit->rooms->map(function ($room) {
-                    return [
-                        'room' => [
-                            'id' => $room->id,
-                            'name' => $room->name,
-                            'bed_count' => $room->bed_count,
-                            'desc' => $room->desc,
-                        ],
-                        'beds' => $room->beds->map(function ($bed) {
-                            return [
-                                'bed' => [
-                                    'id' => $bed->id,
-                                    'name' => $bed->name,
-                                    'state_ratio_resident' => $bed->state_ratio_resident,
-                                    'state' => $bed->state,
-                                    'desc' => $bed->desc,
-                                ],
-                                'contracts' => $bed->contracts->map(function ($contract) {
-                                    return [
-                                        'contract' => [
-                                            'id' => $contract->id,
-                                            'payment_date' => $contract->payment_date_jalali,
-                                            'day_since_payment' => $this->getDaysSincePayment($contract->payment_date),
-                                            'start_date' => $contract->start_date_jalali,
-                                            'end_date' => $contract->end_date_jalali,
-                                            'state' => $contract->state,
-                                        ],
-                                        'resident' => $contract->resident ? [
-                                            'id' => $contract->resident->id,
-                                            'full_name' => $contract->resident->full_name,
-                                            'phone' => $contract->resident->formatted_phone,
-                                            'age' => $contract->resident->age,
-                                            'job' => $contract->resident->job,
-                                            'referral_source' => $contract->resident->referral_source,
-                                            'document' => $contract->resident->document,
-                                            'form' => $contract->resident->form,
-                                            'rent' => $contract->resident->rent,
-                                            'trust' => $contract->resident->trust,
-                                        ] : null,
-                                        'notes' => $contract->resident?->notes->map(function ($note) {
-                                                return [
-                                                    'id' => $note->id,
-                                                    'type' => $note->type,
-                                                    'note' => $note->note,
-                                                    'created_at' => $note->created_at,
-                                                ];
-                                            }) ?? collect(),
-                                    ];
-                                }),
-                            ];
-                        }),
-                    ];
-                }),
-            ];
-        });
+                return [
+                    'unit' => [
+                        'id' => $unit->id,
+                        'name' => $unit->name,
+                        'code' => $unit->code,
+                        'desc' => $unit->desc,
+                    ],
+                    'rooms' => $unit->rooms->map(function ($room) {
+                        return [
+                            'room' => [
+                                'id' => $room->id,
+                                'name' => $room->name,
+                                'bed_count' => $room->bed_count,
+                                'desc' => $room->desc,
+                            ],
+                            'beds' => $room->beds->map(function ($bed) {
+                                return [
+                                    'bed' => [
+                                        'id' => $bed->id,
+                                        'name' => $bed->name,
+                                        'state_ratio_resident' => $bed->state_ratio_resident,
+                                        'state' => $bed->state,
+                                        'desc' => $bed->desc,
+                                    ],
+                                    'contracts' => $bed->contracts->map(function ($contract) {
+                                        return [
+                                            'contract' => [
+                                                'id' => $contract->id,
+                                                'payment_date' => $contract->payment_date_jalali,
+                                                'day_since_payment' => $this->getDaysSincePayment($contract->payment_date),
+                                                'start_date' => $contract->start_date_jalali,
+                                                'end_date' => $contract->end_date_jalali,
+                                                'state' => $contract->state,
+                                            ],
+                                            'resident' => $contract->resident ? [
+                                                'id' => $contract->resident->id,
+                                                'full_name' => $contract->resident->full_name,
+                                                'phone' => $contract->resident->formatted_phone,
+                                                'age' => $contract->resident->age,
+                                                'job' => $contract->resident->job,
+                                                'referral_source' => $contract->resident->referral_source,
+                                                'document' => $contract->resident->document,
+                                                'form' => $contract->resident->form,
+                                                'rent' => $contract->resident->rent,
+                                                'trust' => $contract->resident->trust,
+                                            ] : null,
+                                            'notes' => $contract->resident?->notes->map(function ($note) {
+                                                    return [
+                                                        'id' => $note->id,
+                                                        'type' => $note->type,
+                                                        'note' => $note->note,
+                                                        'created_at' => $note->created_at,
+                                                    ];
+                                                }) ?? collect(),
+                                        ];
+                                    }),
+                                ];
+                            }),
+                        ];
+                    }),
+                ];
+            });
     }
 }

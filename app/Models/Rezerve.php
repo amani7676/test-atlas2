@@ -11,7 +11,6 @@ class Rezerve extends Model
      protected $fillable = [
         'full_name',
         'phone',
-        'bed_id',
         'note',
         'priority'
     ];

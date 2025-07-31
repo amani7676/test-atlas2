@@ -18,7 +18,8 @@ class Resident extends Model
         'referral_source',
         'form',
         'rent',
-        'trust'
+        'trust',
+        'document',
     ];
     protected $dates = ['deleted_at'];
 

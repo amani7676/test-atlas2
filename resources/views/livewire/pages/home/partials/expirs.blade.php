@@ -24,7 +24,7 @@
                         $counter = 0;
                     @endphp
                     @foreach ($this->allReportService->getAllResidentsWithDetails() as $data)
-                        @if ($data['contract']['day_since_payment'] <= 10)
+                        @if ($data['contract']['day_since_payment'] <= 0)
                             @php
                                 $counter++;
                             @endphp
@@ -46,7 +46,7 @@
                                     @endforeach
                                 </td>
                                 <td>
-                                    <a href="{{--  route('list')#{{ $room['name'] --}}" target="_blank" class="text-primary action-btn">
+                                    <a href="{{ route('table_list')}}#{{ $data['room']['name'] }}" target="_blank" class="text-primary action-btn">
                                         <i class="fas fa-external-link-alt"></i>
                                     </a>
                                 </td>

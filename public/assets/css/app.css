@@ -237,12 +237,24 @@ span.span-empty {
 }
 
 /* menu */
-.modern-navbar {
+nav.modern-navbar {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     padding: 15px 0;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+}
+.modern-navbar.shrink {
+    padding: 4px 0;
+}
+
+.modern-navbar.shrink .nav-link {
+    font-size: 12px;
+    padding: 6px 12px;
 }
 
 .navbar-brand {
@@ -285,7 +297,7 @@ span.span-empty {
 
 .search-btn {
     position: absolute;
-    right: 10px;
+    right: 85%;
     top: 50%;
     transform: translateY(-50%);
     background: none;
@@ -548,6 +560,13 @@ span.span-empty {
         margin: 20px 0;
         max-width: 100%;
     }
+}
+
+
+.modern-navbar {
+    position: sticky;
+    top: 0;
+    z-index: 9999;
 }
 
 /* modal add */
@@ -930,13 +949,13 @@ div.col-lg-6.col-xl-6 {
     border: 2px dashed #198754;
     background: transparent;
     color: #198754;
-    transition: all 0.3s ease;
+    /*transition: all 0.3s ease;*/
 }
 
 .add-resident-btn:hover {
     background: #198754;
     color: white;
-    border-style: solid;
+    /*border-style: solid;*/
 }
 
 .form-control-sm {
@@ -1377,7 +1396,7 @@ span.span-empty {
 
 .search-btn {
     position: absolute;
-    right: 10px;
+    right: 85%;
     top: 50%;
     transform: translateY(-50%);
     background: none;
@@ -2022,13 +2041,13 @@ div.col-lg-6.col-xl-6 {
     border: 2px dashed #198754;
     background: transparent;
     color: #198754;
-    transition: all 0.3s ease;
+    /*transition: all 0.3s ease;*/
 }
 
 .add-resident-btn:hover {
     background: #198754;
     color: white;
-    border-style: solid;
+    /*border-style: solid;*/
 }
 
 .form-control-sm {
@@ -2145,3 +2164,9 @@ div#tableforvahed1>div.table-responsive>.modern-table thead th {
 
 }
 
+:root {
+    --cute-toast-z-index: 9999;
+}
+tbody, td, tfoot, th, thead, tr {
+    border-style: inherit !important;
+}

@@ -12,18 +12,16 @@ class StatusService
      */
     public function getStatusBadge(int $daysSincePayment): string
     {
+
         if ($daysSincePayment < 0) {
             // پرداخت معوقه
             return '<span class="badge bg-danger">' . abs($daysSincePayment) . '</span>';
         } elseif ($daysSincePayment == 0) {
             // امروز سررسید است
-            return '<span class="badge bg-warning text-dark">امروز سررسید</span>';
-        } elseif ($daysSincePayment <= 3) {
-            // 1-3 روز باقی مانده
-            return '<span class="badge bg-warning">' . $daysSincePayment . '</span>';
+            return '<span class="badge text-dark" style="background-color:#F97A00">امروز سررسید</span>';
         } elseif ($daysSincePayment <= 7) {
             // 4-7 روز باقی مانده
-            return '<span class="badge bg-info">' . $daysSincePayment . '</span>';
+            return '<span class="badge bg-warning">' . $daysSincePayment . '</span>';
         } else {
             // بیش از 7 روز باقی مانده
             return '<span class="badge bg-success">' . $daysSincePayment . '</span>';

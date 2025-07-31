@@ -1,6 +1,6 @@
 <div>
     <div class="modal fade" id="residentModal" tabindex="-1" aria-labelledby="residentModalLabel"
-         aria-hidden="true" wire:ignore.self>
+         aria-hidden="true" wire:ignore.self style="margin-top: 3.5%">
         <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content">
 
@@ -176,7 +176,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <div class="form-check">
+                                        <div class="form-check d-flex justify-content-between flex-row-reverse align-items-center"">
                                             <input class="form-check-input" type="checkbox" id="form_modal"
                                                    wire:model="form_modal">
                                             <label class="form-check-label" for="form_modal">
@@ -187,7 +187,7 @@
                                     </div>
 
                                     <div class="col-md-6 mb-3">
-                                        <div class="form-check">
+                                        <div class="form-check d-flex justify-content-between flex-row-reverse align-items-center"">
                                             <input class="form-check-input" type="checkbox" id="document_modal"
                                                    wire:model="document_modal">
                                             <label class="form-check-label" for="document_modal">
@@ -200,7 +200,7 @@
 
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
-                                        <div class="form-check">
+                                        <div class="form-check d-flex justify-content-between flex-row-reverse align-items-center"">
                                             <input class="form-check-input" type="checkbox" id="rent_modal"
                                                    wire:model="rent_modal">
                                             <label class="form-check-label" for="rent_modal">
@@ -211,7 +211,7 @@
                                     </div>
 
                                     <div class="col-md-6 mb-3">
-                                        <div class="form-check">
+                                        <div class="form-check d-flex justify-content-between flex-row-reverse align-items-center"">
                                             <input class="form-check-input" type="checkbox" id="trust_modal"
                                                    wire:model="trust_modal">
                                             <label class="form-check-label" for="trust_modal">

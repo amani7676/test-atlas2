@@ -44,4 +44,64 @@ class NoteRepository
             ->limit($limit)
             ->get();
     }
+
+
+    public function formatNoteForDisplay(array $noteArray): string
+    {
+        $type = $noteArray['type'] ?? 'other';
+        $noteText = $noteArray['note'] ?? '';
+        $formats = [
+
+            'end_date' => [
+                'icon' => '📅',
+                'prefix' => 'سررسید',
+                'status' => '📌 سررسید'
+            ],
+            'payment' => [
+                'icon' => '💸',
+                'prefix' => 'پرداخت',
+                'status' => '✅ بدهی'
+            ],
+            'exit' => [
+                'icon' => '🚪',
+                'prefix' => 'خروج',
+                'status' => '⚠️ پایان'
+            ],
+            'demand' => [
+                'icon' => '⏳',
+                'prefix' => 'طلب',
+                'status' => '❌ طلب'
+            ],
+            'other' => [
+                'icon' => 'ℹ️',
+                'prefix' => '',
+                'status' => '📝 دیگر'
+            ]
+        ];
+
+        $format = $formats[$type] ?? $formats['other'];
+
+        return sprintf(
+            "%s %s ::  %s ",
+            $format['icon'],
+            $format['prefix'],
+            $this->cleanNoteText($noteText),
+        );
+    }
+
+    /**
+     * پاکسازی متن یادداشت برای نمایش بهتر
+     */
+    private function cleanNoteText(string $noteText): string
+    {
+        // حذف فاصله‌های اضافه
+        $cleaned = trim($noteText);
+
+        // تبدیل اعداد فارسی به انگلیسی (در صورت نیاز)
+        $persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+        $englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+        $cleaned = str_replace($persianNumbers, $englishNumbers, $cleaned);
+
+        return $cleaned;
+    }
 }

@@ -162,15 +162,15 @@ class Tablelists extends Component
     {
         try {
             // ولیدیشن قبل از ذخیره
-            if (!$this->validatePhoneNumber($residentId)) {
-                $this->dispatch('show-toast', [
-                    'type' => 'error',
-                    'title' => 'خطا!',
-                    'description' => 'لطفا شماره تلفن را به درستی وارد کنید',
-                    'timer' => 4000
-                ]);
-                return;
-            }
+//            if (!$this->validatePhoneNumber($residentId)) {
+//                $this->dispatch('show-toast', [
+//                    'type' => 'error',
+//                    'title' => 'خطا!',
+//                    'description' => 'لطفا شماره تلفن را به درستی وارد کنید',
+//                    'timer' => 4000
+//                ]);
+//                return;
+//            }
             // بروزرسانی اطلاعات ساکن
             $resident = \App\Models\Resident::find($residentId);
             if ($resident) {

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Pages\Home;
 
+use App\Repositories\NoteRepository;
 use App\Services\Core\StatusService;
 use App\Models\Rezerve;
 use App\Repositories\BedRepository;
@@ -16,7 +17,8 @@ class Home extends Component
     protected AllReportService $allReportService;
     protected RezerveRepository $rezerveRepository;
     protected BedRepository $bedRepository;
-    protected StatusService $statusService; // اضافه شد
+    protected StatusService $statusService;
+    protected NoteRepository $noteRepository;
 
 
     // رویدادهایی که این کامپوننت به آنها گوش می‌دهد
@@ -26,13 +28,14 @@ class Home extends Component
         AllReportService $occupancyReportService,
         RezerveRepository $rezerveRepository,
         BedRepository $bed_repository,
-        StatusService $statusService // اضافه شد
-
+        StatusService $statusService ,
+        NoteRepository $noteRepository,
     ): void {
         $this->allReportService = $occupancyReportService;
         $this->rezerveRepository = $rezerveRepository;
         $this->bedRepository = $bed_repository;
         $this->statusService = $statusService; // اضافه شد
+        $this->noteRepository = $noteRepository;
 
     }
 
@@ -45,7 +48,7 @@ class Home extends Component
             'rezerves' => $this->rezerveRepository,
             'beds' => $this->bedRepository,
             'statusService' => $this->statusService, // اضافه شد برای استفاده در view
-
+            'noteRepository' => $this->noteRepository
         ]);
     }
 }

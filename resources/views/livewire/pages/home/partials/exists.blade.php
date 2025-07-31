@@ -43,7 +43,7 @@
                                     @endforeach
                                 </td>
                                 <td>
-                                    <a href="{{--  route('list')#{{ $room['name'] --}}" target="_blank" class="text-primary action-btn">
+                                    <a href="{{ route('table_list')}}#{{ $data['room']['name'] }}" target="_blank" class="text-primary action-btn">
                                         <i class="fas fa-external-link-alt"></i>
                                     </a>
                                 </td>
