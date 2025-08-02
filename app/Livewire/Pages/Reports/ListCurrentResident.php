@@ -33,10 +33,15 @@ class ListCurrentResident extends Component
         $this->loadData();
     }
 
-    public function loadData()
+    public function loadData(): void
     {
-        // بارگذاری واحدها با اتاق‌ها و تخت‌ها
-        $this->units = Unit::with(['rooms.beds.contracts.resident'])->get();
+        // بارگذاری واحدها با اتاق‌هایی که type آنها room است
+        $this->units = Unit::with([
+            'rooms' => function ($query) {
+                $query->where('type', 'room');
+            },
+            'rooms.beds.contracts.resident'
+        ])->get();
 
         // تنظیم اتاق‌ها برای نمایش در جداول
         $this->rooms = collect();
@@ -65,14 +70,14 @@ class ListCurrentResident extends Component
         $this->editing_bed_id = null;
     }
 
-    public function getBedInfo($bed)
+    public function getBedInfo($bed): array
     {
-        $activeContract = $bed->contracts()->first();
+        $Contract = $bed->contracts()->first();
 
-        if ($activeContract && $activeContract->resident) {
+        if ($Contract && $Contract->resident) {
             return [
-                'name' => $activeContract->resident->full_name,
-                'date' => $activeContract->getPaymentDateJalaliAttribute(),
+                'name' => $Contract->resident->full_name,
+                'date' => $Contract->getPaymentDateJalaliAttribute(),
                 'occupied' => true
             ];
         }

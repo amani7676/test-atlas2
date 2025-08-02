@@ -22,8 +22,9 @@
                     @php
                         $counter = 0;
                     @endphp
-                    @foreach ($this->allReportService->getAllResidentsWithDetails() as $data)
-                        @if ($data['contract']['state'] == 'leaving')
+
+                    @foreach ($this->allReportService->getAllResidentsWithDetails('contract.day_since_payment', 'asc') as $data)
+                        @if ($data['contract']['state'] === 'leaving')
                             @php $counter++; @endphp
                             <tr>
                                 <td class="text-info">{{ $counter }}</td>
@@ -43,7 +44,8 @@
                                     @endforeach
                                 </td>
                                 <td>
-                                    <a href="{{ route('table_list')}}#{{ $data['room']['name'] }}" target="_blank" class="text-primary action-btn">
+                                    <a href="{{ route('table_list')}}#{{ $data['room']['name'] }}" target="_blank"
+                                       class="text-primary action-btn">
                                         <i class="fas fa-external-link-alt"></i>
                                     </a>
                                 </td>

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Components;
 
+use App\Services\Report\AllReportService;
 use Livewire\Component;
 use App\Models\Resident;
 use Illuminate\Database\Eloquent\Collection;
@@ -21,6 +22,7 @@ class LiveSearch extends Component
     public function mount()
     {
         $this->searchResults = new Collection();
+
     }
 
     public function updatedSearch()

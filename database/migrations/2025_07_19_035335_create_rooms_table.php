@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('unit_id')->constrained('units')->onUpdate('cascade')->onDelete('cascade');
             $table->bigInteger('bed_count');
             $table->text('desc');
+            $table->enum('type', ['room', 'reception'])->default('room');
             $table->timestamps();
         });
     }

@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('keys', function (Blueprint $table) {
            $table->id();
-            $table->string('name');
-            $table->bigInteger('code');
-            $table->foreignId('room_id')->constrained('rooms')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('name')->unique();
+            $table->integer('code');
             $table->text('desc');
             $table->string('note');
             $table->timestamps();

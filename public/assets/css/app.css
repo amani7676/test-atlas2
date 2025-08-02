@@ -1060,17 +1060,6 @@ div.card-header > .mb-0 {
     font-size: 36px !important;
     font-weight: bold;
 }
-/*div#header_vahed_1 {*/
-/*    background-color: #3E5F44;*/
-/*}*/
-/*div#otagh-vahed1 {*/
-/*    background-color: #3E5F44;*/
-/*    color: white;*/
-/*}*/
-/*div#tableforvahed1>div.table-responsive>.modern-table thead th {*/
-/*    background-color: #5E936C !important;*/
-
-/*}*/
 
 
 div#header_vahed_2 {
@@ -1097,16 +1086,6 @@ div#tableforvahed3>div.table-responsive>.modern-table thead th {
 }
 
 
-div#header_vahed_1 {
-    background-color: #3E5F44;
-}
-div#otagh-vahed1 {
-    background-color: #3E5F44;
-    color: white;
-}
-div#tableforvahed1>div.table-responsive>.modern-table thead th {
-    background-color: #5E936C !important;
-}
 
 
 div#header_vahed_4 {
@@ -2165,16 +2144,16 @@ div.card-header > .mb-0 {
     font-weight: bold;
 }
 div#header_vahed_1 {
-    background-color: #0c5460;
+    background-color: #3E5F44;
 }
 div#otagh-vahed1 {
-    background-color: #5E936C;
+    background-color: #3E5F44;
     color: white;
 }
 div#tableforvahed1>div.table-responsive>.modern-table thead th {
-    background-color: #93DA97 !important;
-
+    background-color: #5E936C !important;
 }
+
 
 :root {
     --cute-toast-z-index: 9999;

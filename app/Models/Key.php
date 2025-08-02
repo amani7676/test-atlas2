@@ -18,6 +18,14 @@ class Key extends Model
      // Relations
     public function rooms()
     {
-        return $this->belongsToMany(Room::class, 'key_room');
+        return $this->belongsToMany(Room::class, 'key_room')
+            ->withPivot(['assigned_at', 'expires_at', 'notes'])
+            ->withTimestamps();
+    }
+
+    // بررسی دسترسی به اتاق خاص
+    public function hasAccessToRoom($roomId)
+    {
+        return $this->rooms()->where('room_id', $roomId)->exists();
     }
 }

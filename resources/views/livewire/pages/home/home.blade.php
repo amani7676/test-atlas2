@@ -1,10 +1,5 @@
 <div class="wrapper">
-    {{-- Success/Error Messages --}}
-    @if (session()->has('message'))
-        <div class="custom-alert alert-{{ session('alert_type', 'success') }}" role="alert" aria-live="polite">
-            {{ session('message') }}
-        </div>
-    @endif
+
     <div class="content">
         <div class="container-fluid px-4 mt-4">
 
@@ -31,7 +26,7 @@
 
                 {{-- Empty Beds - Interactive با Livewire --}}
                 <div class="col-lg-5">
-                    <livewire:pages.home.componets.empty-beds :allReportService="$allReportService" :beds="$beds"  />
+                    <livewire:pages.home.componets.empty-beds :allReportService="$allReportService" :beds="$beds"/>
                 </div>
             </div>
 
@@ -39,12 +34,12 @@
             <div class="row mt-4">
                 {{-- Documents - Interactive با Livewire --}}
                 <div class="col-md-4">
-                    <livewire:pages.home.componets.documetns :allReportService="$allReportService"  />
+                    <livewire:pages.home.componets.documetns :allReportService="$allReportService"/>
                 </div>
 
                 {{-- Forms - Interactive با Livewire --}}
                 <div class="col-md-4">
-                    <livewire:pages.home.componets.forms :allReportService="$allReportService" />
+                    <livewire:pages.home.componets.forms :allReportService="$allReportService"/>
                 </div>
 
                 {{-- Debts - Static با partial --}}
@@ -57,23 +52,23 @@
     </div>
 
     @script
-        <script>
-            // !!! گوش دادن به رویداد 'show-toast'
-            window.addEventListener('show-toast', (event) => {
-                const params = event.detail[0];
+    <script>
+        // !!! گوش دادن به رویداد 'show-toast'
+        window.addEventListener('show-toast', (event) => {
+            const params = event.detail[0];
 
-                // !!! فراخوانی cuteToast به جای cuteAlert
-                if (typeof window.cuteToast === 'function') {
-                    cuteToast({
-                        type: params.type,
-                        title: params.title,
-                        description: params.description,
-                        timer: params.timer // timer در Toast ضروری است
-                    });
-                } else {
-                    console.error('cuteToast function is not available on window object.');
-                }
-            });
-        </script>
+            // !!! فراخوانی cuteToast به جای cuteAlert
+            if (typeof window.cuteToast === 'function') {
+                cuteToast({
+                    type: params.type,
+                    title: params.title,
+                    description: params.description,
+                    timer: params.timer // timer در Toast ضروری است
+                });
+            } else {
+                console.error('cuteToast function is not available on window object.');
+            }
+        });
+    </script>
     @endscript
 </div>

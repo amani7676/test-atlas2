@@ -20,3 +20,5 @@ Route::get("/lists", Tablelists::class)->name('table_list');
 Route::get("/BedStatistic", \App\Livewire\Pages\BedStatistics\BedStatistics::class)->name('Bed_statistic');
 Route::get("/Reservations", Reservations::class)->name('reservations');
 Route::get("/report/list-current-resident", \App\Livewire\Pages\Reports\ListCurrentResident::class)->name('report.list_current_resident');
+Route::get('/coolers', \App\Livewire\Pages\Coolers\CoolerRoomManager::class)->name('coolers');
+Route::get('/keys', \App\Livewire\Pages\Keys\KeyRoomTable::class)->name('keys');

@@ -94,9 +94,14 @@
 
                                     <!-- واحد -->
                                     @if($result->contract->bed->room && $result->contract->bed->room->unit)
-                                        <span style="background: #fff3cd; padding: 2px 6px; border-radius: 4px;">
+                                        <span style="background: #F1F0E4; padding: 2px 6px; border-radius: 4px;">
                                         <i class="fas fa-building" style="margin-left: 4px;"></i>
-                                        واحد: {{ $result->contract->bed->room->unit->name }}
+                                        : {{ $result->contract->bed->room->unit->name }}
+                                    </span>
+
+                                        <span style="background: #F1F0E4; padding: 2px 6px; border-radius: 4px;">
+                                            <i class="fa-solid fa-calendar-days" style="margin-left: 4px;"></i>
+                                        : {{ $result->contract->getPaymentDateJalaliAttribute() }}
                                     </span>
                                     @endif
                                 </div>

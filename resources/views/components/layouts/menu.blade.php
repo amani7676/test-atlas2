@@ -51,9 +51,16 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-exchange-alt"></i>
-                        جابجایی
+                    <a class="nav-link" href="{{ route("coolers") }}">
+                        <i class="fa-solid fa-fan"></i>
+                        کولرها
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('keys') }}">
+                        <i class="fa-solid fa-key"></i>
+                        کلیدها
                     </a>
                 </li>
             </ul>

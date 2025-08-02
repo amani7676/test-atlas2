@@ -15,7 +15,7 @@ class StatusService
 
         if ($daysSincePayment < 0) {
             // پرداخت معوقه
-            return '<span class="badge bg-danger">' . abs($daysSincePayment) . '</span>';
+            return '<span class="badge bg-danger">' . $daysSincePayment . '</span>';
         } elseif ($daysSincePayment == 0) {
             // امروز سررسید است
             return '<span class="badge text-dark" style="background-color:#F97A00">امروز سررسید</span>';

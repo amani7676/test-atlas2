@@ -28,25 +28,25 @@ class AllReportService
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function getAllResidentsWithDetails()
+    /**
+     * تمام ساکنین را با جزئیات کامل و قابلیت مرتب‌سازی داینامیک دریافت می‌کند.
+     *
+     * @param string $sortBy کلید مرتب‌سازی با استفاده از "dot notation" (مثال: 'resident.full_name').
+     * @param string $sortDirection جهت مرتب‌سازی ('asc' یا 'desc').
+     * @return array
+     */
+    public function getAllResidentsWithDetails($sortBy = 'contract.day_since_payment', $sortDirection = 'desc')
     {
+        // تعیین اینکه آیا مرتب‌سازی نزولی است یا صعودی
+        $isDescending = ($sortDirection === 'desc');
+
         return Resident::with([
-            'contract' => function ($query) {
-                $query->with([
-                    'bed' => function ($bedQuery) {
-                        $bedQuery->with([
-                            'room' => function ($roomQuery) {
-                                $roomQuery->with('unit');
-                            }
-                        ]);
-                    }
-                ]);
-            },
+            'contract.bed.room.unit', // زنجیره روابط را می‌توان به صورت بهینه‌تر نوشت
             'notes'
         ])
             ->get()
             ->map(function ($resident) {
-                $contract = $resident->contract; // این یک instance از Contract است، نه Collection
+                $contract = $resident->contract;
 
                 return [
                     'resident' => [
@@ -98,13 +98,20 @@ class AllReportService
                     }),
                 ];
             })
-            ->sortByDesc(function ($item) {
-                return $item['contract']['day_since_payment'] ?? PHP_INT_MAX;
-            })
+            // مرتب‌سازی داینامیک با استفاده از پارامترها
+            ->sortBy(function ($item) use ($sortBy, $isDescending) {
+                // با data_get به راحتی به مقادیر تودرتو دسترسی پیدا می‌کنیم
+                $value = data_get($item, $sortBy);
+
+                // این منطق تضمین می‌کند که مقادیر null همیشه در انتهای لیست قرار گیرند
+                if ($value === null) {
+                    return $isDescending ? -INF : INF;
+                }
+                return $value;
+            }, SORT_REGULAR, $isDescending)
             ->values()
             ->all();
     }
-
     /**
      * دریافت تمام ساکنان با جزئیات کامل (نسخه ساده‌تر)
      *
@@ -142,18 +149,21 @@ class AllReportService
 
     public function getDaysSincePayment($paymentDate)
     {
-
         $today = Carbon::now()->startOfDay();
         $payment = Carbon::parse($paymentDate)->startOfDay();
 
-        return $today->diffInDays($payment, false);
+        $diff = $payment->diffInDays($today);
+
+        return $payment->lessThan($today) ? -$diff : $diff;
     }
+
 
     public function getUnitWithDependence()
     {
         return Unit::with([
             'rooms' => function ($query) {
-                $query->orderBy('name', 'desc')
+                $query->where('type', 'room') // Add this to filter rooms by type
+                ->orderBy('name', 'desc')
                     ->with([
                         'beds' => function ($bedQuery) {
                             $bedQuery->with([

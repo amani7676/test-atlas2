@@ -3,7 +3,6 @@
         @php
             $colorClass = $this->getColorClass($data['unit']['id']);
         @endphp
-
         <div class="vahed-card mb-4 p-1">
             <div class="card-header vahed-header " id="header_vahed_{{ $data['unit']['id'] }}">
                 <h4 class="mb-0 text-white">{{ $data['unit']['name'] }}</h4>

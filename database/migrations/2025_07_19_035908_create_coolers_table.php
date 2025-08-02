@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,10 +12,13 @@ return new class extends Migration
     {
         Schema::create('coolers', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('number');
-            $table->foreignId('room_id')->constrained('rooms')->onUpdate('cascade')->onDelete('cascade');
-            $table->text('desc');
-            $table->string('note');
+            $table->string('name');
+            $table->bigInteger('number')->nullable();
+            $table->text('desc')->nullable();
+            $table->enum('status', ['active', 'inactive', 'maintenance'])->default('active');
+            $table->string('model')->nullable();
+            $table->string('serial_number')->nullable()->unique();
+            $table->date('installation_date')->nullable();
             $table->timestamps();
         });
     }
